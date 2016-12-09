@@ -1,5 +1,5 @@
 'use strict';
-const ts = require("typescript");
+const ts = require('typescript');
 
 class TsMockInterfaceGenerator {
 
@@ -12,7 +12,7 @@ class TsMockInterfaceGenerator {
     }
 
     add(content) {
-        ts.createSourceFile('', content.toString(), ts.ScriptTarget.ES6, true)
+        ts.createSourceFile('', content.toString(), ts.ScriptTarget.Latest, true)
             .getChildren()
             .forEach(node => this._addNestedInterfaces(node, this._modules));
     }
