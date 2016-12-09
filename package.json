@@ -1,9 +1,21 @@
 {
   "name": "typescript-mock-interface-generator",
+  "description": "Generates mock objects from typescript interfaces",
   "version": "1.0.0",
   "main": "src/index.js",
   "author": "techmatt101 <matt@kempmail.co.uk>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/techmatt101/typescript-mock-interface-generator"
+  },
+  "keywords": [
+    "typescript",
+    "interfaces",
+    "mock",
+    "testing",
+    "fixtures"
+  ],
   "scripts": {
     "test": "mocha test/*.spec.js"
   },
