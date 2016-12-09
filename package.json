@@ -1,0 +1,16 @@
+{
+  "name": "typescript-mock-interface",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "author": "techmatt101 <matt@kempmail.co.uk>",
+  "license": "MIT",
+  "scripts": {
+    "test": "mocha test/*.spec.js"
+  },
+  "devDependencies": {
+    "mocha": "^3.1.2"
+  },
+  "peerDependencies": {
+    "typescript": "1.5"
+  }
+}
