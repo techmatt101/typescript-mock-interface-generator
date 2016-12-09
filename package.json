@@ -1,5 +1,5 @@
 {
-  "name": "typescript-mock-interface",
+  "name": "typescript-mock-interface-generator",
   "version": "1.0.0",
   "main": "src/index.js",
   "author": "techmatt101 <matt@kempmail.co.uk>",
