@@ -56,8 +56,14 @@ class TsMockInterfaceGenerator {
         return output;
     }
 
-    generate() {
-        return this._generateOutput(this._modules).join('\n');
+    generate(options) {
+        var output = this._generateOutput(this._modules);
+
+        if(options && options.exportOutput) {
+            output = output.map(x => 'export ' + x);
+        }
+
+        return output.join('\n');
     }
 
     static generateValueFromInterfaceMember(member) {

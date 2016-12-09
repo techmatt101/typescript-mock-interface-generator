@@ -32,4 +32,10 @@ describe('Tests', () => {
         subject.add('module A { module B { interface A {} } }');
         assert.equal(subject.generate(), 'module A { export module B { export class A {  } } }');
     });
+
+    it('export output', () => {
+        var subject = new TsMockInterfaceGenerator();
+        subject.add('interface A {}');
+        assert.equal(subject.generate({ exportOutput: true }), 'export class A {  }');
+    });
 });
