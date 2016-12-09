@@ -46,7 +46,7 @@ class TsMockInterfaceGenerator {
                 .filter(x => x.kind === ts.SyntaxKind.PropertySignature || x.kind === ts.SyntaxKind.PropertyDeclaration || x.kind === ts.SyntaxKind.MethodSignature)
                 .map((member) => TsBuilder.generateMember(member));
 
-            output.push(`class ${interfaceNode.name.text} { ${properties.join(' ')} }`);
+            output.push(`class ${interfaceNode.name.text}${(interfaceNode.typeParameters) ? `<${interfaceNode.typeParameters.map(x => x.getText()).join(', ')}>` : ''} { ${properties.join(' ')} }`);
         });
 
         module.modules.forEach(childModule => {
