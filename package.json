@@ -1,7 +1,7 @@
 {
   "name": "typescript-mock-interface-generator",
   "description": "Generates mock objects from typescript interfaces",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "main": "src/index.js",
   "author": "techmatt101 <matt@kempmail.co.uk>",
   "license": "MIT",
