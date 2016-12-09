@@ -43,8 +43,8 @@ class TsMockInterfaceGenerator {
 
         module.interfaces.forEach(interfaceNode => {
             var properties = interfaceNode.members
-                .filter(x => x.kind === ts.SyntaxKind.PropertySignature || x.kind === ts.SyntaxKind.PropertyDeclaration)
-                .map((member) => `${member.name.text} = ${TsMockInterfaceGenerator.generateValueFromInterfaceMember(member)};`);
+                .filter(x => x.kind === ts.SyntaxKind.PropertySignature || x.kind === ts.SyntaxKind.PropertyDeclaration || x.kind === ts.SyntaxKind.MethodSignature)
+                .map((member) => TsBuilder.generateMember(member));
 
             output.push(`class ${interfaceNode.name.text} { ${properties.join(' ')} }`);
         });
@@ -65,34 +65,49 @@ class TsMockInterfaceGenerator {
 
         return output.join('\n');
     }
+}
 
-    static generateValueFromInterfaceMember(member) {
+class TsBuilder {
+    static generateMember(member) {
         if (member.kind === ts.SyntaxKind.MethodSignature) {
-            return 'new Function()';
+            return `${member.name.text}${TsBuilder.generateMethod(member)}`;
         }
 
         if (member.type) {
-            switch (member.type.kind) {
-                case ts.SyntaxKind.StringKeyword:
-                    return 'new String()';
-
-                case ts.SyntaxKind.NumberKeyword:
-                    return 'new Number()';
-
-                case ts.SyntaxKind.BooleanKeyword:
-                    return 'new Boolean()';
-
-                case ts.SyntaxKind.TupleType:
-                case ts.SyntaxKind.ArrayType:
-                    return 'new Array()';
-
-                case ts.SyntaxKind.FunctionType:
-                case ts.SyntaxKind.VoidKeyword:
-                    return 'new Function()';
-            }
+            return `${member.name.text} = ${TsBuilder.generateValue(member.type)};`;
         }
 
-        return null;
+        return `${member.name.text} = null;`;
+    }
+
+    static generateMethod(method) {
+        return `(${method.parameters.map(x => x.getText()).join(', ')}) {${(method.type && method.type.kind !== ts.SyntaxKind.VoidKeyword) ? ` return ${TsBuilder.generateValue(method.type)}; ` : ''}}`;
+    }
+
+    static generateValue(type) {
+        switch (type.kind) {
+            case ts.SyntaxKind.StringKeyword:
+                return "''";
+
+            case ts.SyntaxKind.NumberKeyword:
+                return '0';
+
+            case ts.SyntaxKind.BooleanKeyword:
+                return 'false';
+
+            case ts.SyntaxKind.TupleType:
+            case ts.SyntaxKind.ArrayType:
+                return '[]';
+
+            case ts.SyntaxKind.FunctionType:
+                return `function ${TsBuilder.generateMethod(type)}`;
+
+            case ts.SyntaxKind.VoidKeyword:
+            case ts.SyntaxKind.UndefinedKeyword:
+                return 'undefined';
+        }
+
+        return 'null';
     }
 }
 
