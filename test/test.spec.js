@@ -52,6 +52,12 @@ describe('Tests', () => {
         assert.equal(subject.generate(), "class A { test = undefined; }");
     });
 
+    it('type object', () => {
+        var subject = new TsMockInterfaceGenerator();
+        subject.add('interface A { test: ICar; }');
+        assert.equal(subject.generate(), "class A { test = null as ICar; }");
+    });
+
     it('type function', () => {
         var subject = new TsMockInterfaceGenerator();
         subject.add('interface A { test: () => void; }');

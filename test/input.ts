@@ -1,6 +1,11 @@
-interface IVector {
+interface IPoint {
     x: number;
     y: number;
+    angle: IAngle
 
-    add(vector: IVector): IVector;
+    add(vector: IPoint): IPoint;
+}
+
+interface IAngle {
+    deg: number;
 }

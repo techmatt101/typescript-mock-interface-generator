@@ -107,7 +107,7 @@ class TsBuilder {
                 return 'undefined';
         }
 
-        return 'null';
+        return 'null as ' + type.getText();
     }
 }
 
