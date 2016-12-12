@@ -46,7 +46,7 @@ class TsMockInterfaceGenerator {
                 .filter(x => x.kind === ts.SyntaxKind.PropertySignature || x.kind === ts.SyntaxKind.PropertyDeclaration || x.kind === ts.SyntaxKind.MethodSignature)
                 .map((member) => TsBuilder.generateMember(member));
 
-            output.push(`class ${interfaceNode.name.text}${(interfaceNode.typeParameters) ? `<${interfaceNode.typeParameters.map(x => x.getText()).join(', ')}>` : ''} { ${properties.join(' ')} }`);
+            output.push(`class ${interfaceNode.name.text}${(interfaceNode.typeParameters) ? TsBuilder.generateTypeParameters(interfaceNode) : ''} { ${properties.join(' ')} }`);
         });
 
         module.modules.forEach(childModule => {
@@ -70,7 +70,7 @@ class TsMockInterfaceGenerator {
 class TsBuilder {
     static generateMember(member) {
         if (member.kind === ts.SyntaxKind.MethodSignature) {
-            return `${member.name.text}${TsBuilder.generateMethod(member)}`;
+            return `${member.name.text}${(member.typeParameters) ? TsBuilder.generateTypeParameters(member) : ''}${TsBuilder.generateMethod(member)}`;
         }
 
         if (member.type) {
@@ -78,6 +78,10 @@ class TsBuilder {
         }
 
         return `${member.name.text} = null;`;
+    }
+
+    static generateTypeParameters(node) {
+        return `<${node.typeParameters.map(x => x.getText()).join(', ')}>`;
     }
 
     static generateMethod(method) {

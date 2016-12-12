@@ -77,10 +77,16 @@ describe('Tests', () => {
         assert.equal(subject.generate(), "class A { test(name: string) { return 0; } }");
     });
 
-    it('type method with type', () => {
+    it('interface with type', () => {
         var subject = new TsMockInterfaceGenerator();
         subject.add('interface A<A,B> { }');
         assert.equal(subject.generate(), 'class A<A, B> {  }');
+    });
+
+    it('method with type', () => {
+        var subject = new TsMockInterfaceGenerator();
+        subject.add('interface A { a<T extends Object>() : T }');
+        assert.equal(subject.generate(), 'class A { a<T extends Object>() { return null as T; } }');
     });
 
 
