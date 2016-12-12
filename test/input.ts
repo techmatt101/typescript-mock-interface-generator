@@ -1,7 +1,8 @@
 interface IPoint {
     x: number;
     y: number;
-    angle: IAngle
+    angle: IAngle;
+    points: number[];
 
     add(vector: IPoint): IPoint;
 }

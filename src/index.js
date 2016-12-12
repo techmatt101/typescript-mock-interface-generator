@@ -101,7 +101,7 @@ class TsBuilder {
 
             case ts.SyntaxKind.TupleType:
             case ts.SyntaxKind.ArrayType:
-                return '[]';
+                return '[] as ' + type.getText();
 
             case ts.SyntaxKind.FunctionType:
                 return `function ${TsBuilder.generateMethod(type)}`;

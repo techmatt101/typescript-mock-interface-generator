@@ -30,14 +30,14 @@ describe('Tests', () => {
 
     it('type array', () => {
         var subject = new TsMockInterfaceGenerator();
-        subject.add('interface A { test: []; }');
-        assert.equal(subject.generate(), "class A { test = []; }");
+        subject.add('interface A { test: string[]; }');
+        assert.equal(subject.generate(), "class A { test = [] as string[]; }");
     });
 
     it('type tuple', () => {
         var subject = new TsMockInterfaceGenerator();
         subject.add('interface A { test: [string, number]; }');
-        assert.equal(subject.generate(), "class A { test = []; }");
+        assert.equal(subject.generate(), "class A { test = [] as [string, number]; }");
     });
 
     it('type void', () => {
